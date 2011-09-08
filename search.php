@@ -23,7 +23,7 @@ if (!mysql_numrows($result)) {
     print "<i>No results</i>";
 } else {
 
-    while($row = mysql_fetch_assoc($result)) {
+    foreach($result as $row) {
 
         $movie = new movie($row['id']);
         print "<a href='".$movie->link()."'>$movie->title</a> ($movie->production_year)<br />";

@@ -5,7 +5,7 @@
 include "lib/global.inc.php";
 start_template();
 
-$term		 = mysql_real_escape_string($_GET['q']);
+$term        = mysql_real_escape_string($_GET['q']);
 $search_type = $_GET['search_type'];
 
 ?>
@@ -20,15 +20,15 @@ $search_type = $_GET['search_type'];
 $result = mysql_query_wrapper("SELECT * FROM title WHERE title LIKE '$term%' AND kind_id = 1 LIMIT 100");
 
 if (!mysql_numrows($result)) {
-	print "<i>No results</i>";
+    print "<i>No results</i>";
 } else {
 
-	while($row = mysql_fetch_assoc($result)) {
+    while($row = mysql_fetch_assoc($result)) {
 
-		$movie = new movie($row['id']);
-		print "<a href='".$movie->link()."'>$movie->title</a> ($movie->production_year)<br />";
-	
-	}
+        $movie = new movie($row['id']);
+        print "<a href='".$movie->link()."'>$movie->title</a> ($movie->production_year)<br />";
+
+    }
 
 }
 
@@ -41,15 +41,15 @@ if (!mysql_numrows($result)) {
 $result = mysql_query_wrapper("SELECT * FROM name WHERE name LIKE '$term%'");
 
 if (!mysql_numrows($result)) {
-	print "<i>No results</i>";
+    print "<i>No results</i>";
 } else {
 
-	while($row = mysql_fetch_assoc($result)) {
+    while($row = mysql_fetch_assoc($result)) {
 
-		$actor = new actor($row['id']);
-		print "<a href='".$actor->link()."'>$actor->name</a><br />";
-	
-	}
+        $actor = new actor($row['id']);
+        print "<a href='".$actor->link()."'>$actor->name</a><br />";
+
+    }
 
 }
 
@@ -62,15 +62,15 @@ if (!mysql_numrows($result)) {
 $result = mysql_query_wrapper("SELECT * FROM char_name WHERE name LIKE '$term%' LIMIT 100");
 
 if (!mysql_numrows($result)) {
-	print "<i>No results</i>";
+    print "<i>No results</i>";
 } else {
 
-	while($row = mysql_fetch_assoc($result)) {
+    while($row = mysql_fetch_assoc($result)) {
 
-		$character = new character($row['id']);
-		print "<a href='character.php?id=$character->id'>$character->name</a><br />";
-	
-	}
+        $character = new character($row['id']);
+        print "<a href='character.php?id=$character->id'>$character->name</a><br />";
+
+    }
 
 }
 
@@ -81,23 +81,23 @@ if (!mysql_numrows($result)) {
 
 <?php
 
-	$result = mysql_query_wrapper("SELECT * FROM users WHERE first_name = '$term' 
-	OR last_name = '$term'
-	OR email_address = '$term'
-	LIMIT 100");
+    $result = mysql_query_wrapper("SELECT * FROM users WHERE first_name = '$term'
+    OR last_name = '$term'
+    OR email_address = '$term'
+    LIMIT 100");
 
-	if (!mysql_numrows($result)) {
-		print "<i>No results</i>";
-	} else {
+    if (!mysql_numrows($result)) {
+        print "<i>No results</i>";
+    } else {
 
-		while($row = mysql_fetch_assoc($result)) {
+        while($row = mysql_fetch_assoc($result)) {
 
-			$user = new user($row['id']);
-			print "<a href='".$user->link()."'>$user->email_address</a><br />";
-	
-		}
+            $user = new user($row['id']);
+            print "<a href='".$user->link()."'>$user->email_address</a><br />";
 
-	}
+        }
+
+    }
 
 }
 

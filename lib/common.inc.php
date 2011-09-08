@@ -51,11 +51,17 @@ function get_number_of_actors() {
 
 function get_random_movie() {
 
-  $result = mysql_query_wrapper("SELECT * FROM title WHERE title != ''
-  AND kind_id = 1
-  ORDER BY RAND() LIMIT 1");
-  return mysql_fetch_assoc($result);
+  # "adding holes to the numbers" section in
+  # http://jan.kneschke.de/projects/mysql/order-by-rand/
+  $result = mysql_query_wrapper("
+    SELECT * FROM title AS t1 JOIN
+      (SELECT (RAND() * (SELECT MAX(id) FROM title)) AS id) AS t2
+    WHERE t1.id >= t2.id
+    ORDER BY t1.id ASC
+    LIMIT 1
+  ");
 
+  return mysql_fetch_assoc($result);
 }
 
 function get_random_actor() {

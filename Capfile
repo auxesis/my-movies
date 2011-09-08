@@ -15,11 +15,11 @@ set :deploy_to, "/srv/#{application}"
 
 server "app", :app
 
-after "deploy", "deploy:symlink"
+after "deploy", "deploy:symlink_dodgy"
 after "deploy", "deploy:smoke"
 
 namespace :deploy do
-  task :symlink do
+  task :symlink_dodgy do
     run "#{sudo} ln -sf #{current_path} #{current_path}/#{application}"
   end
 

@@ -9,11 +9,11 @@ $actor->update_info();
 
 if (is_logged_in()) {
 
-	if (!$me->is_favorite_actor($actor->id)) {
-		print "<div id='favourite_movie' style='float: right'><a id='favourite_1' href='user/add_favorite_actor.php?id=$actor->id'>Add as favourite!</a></div>";
-	} else {
-		print "<div id='favourite_movie' style='float: right'><a id='favourite_1' href='user/remove_favorite_actor.php?id=$actor->id'>Remove as favourite!</a></div>";
-	}	
+    if (!$me->is_favorite_actor($actor->id)) {
+        print "<div id='favourite_movie' style='float: right'><a id='favourite_1' href='user/add_favorite_actor.php?id=$actor->id'>Add as favourite!</a></div>";
+    } else {
+        print "<div id='favourite_movie' style='float: right'><a id='favourite_1' href='user/remove_favorite_actor.php?id=$actor->id'>Remove as favourite!</a></div>";
+    }
 }
 
 ?>
@@ -28,31 +28,31 @@ Height: <?php echo $actor->info[22][0]?><br />
 <?php
 $i=0;
 foreach($actor->credits() as $movie_in) {
-	$i++;
-	$movie = new movie($movie_in['movie_id']);
-	
-	if ($movie->kind_id != 1)
-		continue;
-	
-	$character = new character($movie_in['person_role_id']);
+    $i++;
+    $movie = new movie($movie_in['movie_id']);
 
-	if (!$character->id) {
-		
-		/*
-		 There is no "character" for this role, aka
-		 "Unknown".  Show the same row, but don't make
-		 it a link.
-		*/
+    if ($movie->kind_id != 1)
+        continue;
 
-		print "<div style='width: 300px; clear: both; float: left'><a id='credits_$i' href='".$movie->link()."'>$movie->title</a> ($movie->production_year)</div><div style='float: left;'>as ".$character->name."</div>";
-	
-	} else {
-	
-		print "<div style='width: 300px; clear: both; float: left'><a 
-		id='credits_$i' href='".$movie->link()."'>$movie->title</a> ($movie->production_year)</div><div 
-		style='float: left;'>as <a href='".$character->link()."'>$character->name</a></div>";
+    $character = new character($movie_in['person_role_id']);
 
-	}
+    if (!$character->id) {
+
+        /*
+         There is no "character" for this role, aka
+         "Unknown".  Show the same row, but don't make
+         it a link.
+        */
+
+        print "<div style='width: 300px; clear: both; float: left'><a id='credits_$i' href='".$movie->link()."'>$movie->title</a> ($movie->production_year)</div><div style='float: left;'>as ".$character->name."</div>";
+
+    } else {
+
+        print "<div style='width: 300px; clear: both; float: left'><a
+        id='credits_$i' href='".$movie->link()."'>$movie->title</a> ($movie->production_year)</div><div
+        style='float: left;'>as <a href='".$character->link()."'>$character->name</a></div>";
+
+    }
 }
 
 ?>
@@ -65,14 +65,14 @@ foreach($actor->credits() as $movie_in) {
 $comments = $actor->comments();
 
 if (empty($comments)) {
-	print "<i>No comments</i>";
+    print "<i>No comments</i>";
 } else {
-	$i=0;
-	foreach($comments as $comment) {
-		$i++;
-		$user = new user($comment['user_id']);
-		print "<a id='comment_$i' href='".$user->link()."'>$user->email_address</a> wrote: $comment[comment]<hr />";
-	}
+    $i=0;
+    foreach($comments as $comment) {
+        $i++;
+        $user = new user($comment['user_id']);
+        print "<a id='comment_$i' href='".$user->link()."'>$user->email_address</a> wrote: $comment[comment]<hr />";
+    }
 }
 ?>
 

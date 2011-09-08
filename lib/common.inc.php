@@ -66,14 +66,30 @@ function get_random_movie() {
 
 function get_random_actor() {
 
-  $result = mysql_query_wrapper("SELECT * FROM name ORDER BY RAND() LIMIT 1");
+  # "adding holes to the numbers" section in
+  # http://jan.kneschke.de/projects/mysql/order-by-rand/
+  $result = mysql_query_wrapper("
+    SELECT * FROM name AS n1 JOIN
+      (SELECT (RAND() * (SELECT MAX(id) FROM name)) AS id) AS n2
+    WHERE n1.id >= n2.id
+    ORDER BY n1.id ASC
+    LIMIT 1
+  ");
   return mysql_fetch_assoc($result);
 
 }
 
 function get_random_user() {
 
-  $result = mysql_query_wrapper("SELECT * FROM users ORDER BY RAND() LIMIT 1");
+  # "adding holes to the numbers" section in
+  # http://jan.kneschke.de/projects/mysql/order-by-rand/
+  $result = mysql_query_wrapper("
+    SELECT * FROM users AS u1 JOIN
+      (SELECT (RAND() * (SELECT MAX(id) FROM users)) AS id) AS u2
+    WHERE u1.id >= u2.id
+    ORDER BY u1.id ASC
+    LIMIT 1
+  ");
   return mysql_fetch_assoc($result);
 
 }

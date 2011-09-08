@@ -37,15 +37,15 @@ function debug_write($string) {
 }
 
 function get_number_of_users() {
-  $result = mysql_query_wrapper("SELECT count(id) as c FROM users");
+  $result = mysql_query_wrapper("SELECT max(id) as c FROM users");
   return mysql_result($result,0,'c');
 }
 function get_number_of_movies() {
-  $result = mysql_query_wrapper("SELECT count(id) as c FROM title");
+  $result = mysql_query_wrapper("SELECT max(id) as c FROM title");
   return mysql_result($result,0,'c');
 }
 function get_number_of_actors() {
-  $result = mysql_query_wrapper("SELECT count(id) as c FROM name");
+  $result = mysql_query_wrapper("SELECT max(id) as c FROM name");
   return mysql_result($result,0,'c');
 }
 
